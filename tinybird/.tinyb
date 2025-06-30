@@ -1,0 +1,14 @@
+{
+    "host": "https://api.europe-west2.gcp.tinybird.co",
+    "id": "65007844-405e-4acc-a905-7cb92e9885a6",
+    "name": "simmer",
+    "scope": "user",
+    "token": "p.eyJ1IjogIjY1MDA3ODQ0LTQwNWUtNGFjYy1hOTA1LTdjYjkyZTk4ODVhNiIsICJpZCI6ICI1Yjg2OWU1ZC1hMzUwLTRjZWQtOGFjOC02MWFkMjdlNWJkOTciLCAiaG9zdCI6ICJnY3AtZXVyb3BlLXdlc3QyIn0.VoJyg1OlQN8KlOq0LqvQobjzCKwl-NbSDKNq1XLrY7M",
+    "tokens": {
+        "https://api.europe-west2.gcp.tinybird.co": "p.eyJ1IjogIjY1MDA3ODQ0LTQwNWUtNGFjYy1hOTA1LTdjYjkyZTk4ODVhNiIsICJpZCI6ICI1Yjg2OWU1ZC1hMzUwLTRjZWQtOGFjOC02MWFkMjdlNWJkOTciLCAiaG9zdCI6ICJnY3AtZXVyb3BlLXdlc3QyIn0.VoJyg1OlQN8KlOq0LqvQobjzCKwl-NbSDKNq1XLrY7M"
+    },
+    "user_email": "balogun80@gmail.com",
+    "user_id": "0a1786aa-0584-43d8-8940-4c81cfb73702",
+    "user_token": "p.eyJ1IjogIjBhMTc4NmFhLTA1ODQtNDNkOC04OTQwLTRjODFjZmI3MzcwMiIsICJpZCI6ICI4YWI5NDBiMi1hNzVmLTQ0M2EtOTYyMC1hYTQ1ZjY2NWZjN2QiLCAiaG9zdCI6ICJnY3AtZXVyb3BlLXdlc3QyIn0.JLMTGwnVtKU8KecFPs2XQH2HdnEfi4smotDdWSl23D8",
+    "version": "0.0.1.dev238"
+}
