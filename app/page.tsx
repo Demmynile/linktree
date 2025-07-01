@@ -62,6 +62,7 @@ export default function Home() {
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
       {/* Header */}
       <Header isFixed={true}/>
+      
       {/* Hero Section */}
       <section className="px-4 py-20 lg:px-8 lg:py-32">
         <div className="max-w-7xl mx-auto">
