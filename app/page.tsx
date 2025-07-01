@@ -1,5 +1,6 @@
+import Header from "@/components/Header";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, BarChart3, Palette, Shield, Smartphone, Users, Zap } from "lucide-react";
+import { ArrowRight, BarChart3, CheckCircle, Palette, Shield, Smartphone, Star, Users, Zap } from "lucide-react";
 import Link from "next/link";
 
 const features = [
@@ -35,9 +36,32 @@ const features = [
   }
 ]
 
+const testimonials = [
+  {
+    name: "Jane Doe",
+    role: "Content Creator",
+    feedback : "Simmer Link has transformed the way I share my content. The customization options are fantastic!",
+    ranking: "5"
+  },
+  {
+    name: "John Smith",
+    role: "Business Owner",
+    feedback : "The analytics features help me understand my audience better. Highly recommend!",
+    ranking: "5"
+  },
+  {
+    name: "Alice Johnson",
+    role: "Influencer",
+    feedback : "I love how easy it is to create a beautiful link page. It’s a game changer for my brand.",
+    ranking: "5"
+  }
+]
+
 export default function Home() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
+      {/* Header */}
+      <Header isFixed={true}/>
       {/* Hero Section */}
       <section className="px-4 py-20 lg:px-8 lg:py-32">
         <div className="max-w-7xl mx-auto">
@@ -124,6 +148,134 @@ export default function Home() {
           </div>
         </div>
       </section>
+      {/* Social Proof Section */}
+      <section className="px-4 lg:px-8 py-20">
+        <div className ="max-w-7xl mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl lg:text-5xl font-bold text-gray-900 text-center mb-8">
+              Loved by Creators Worldwide
+            </h2>
+            <p className="text-xl text-gray-600">
+              See what our users are saying about Simmer Link
+            </p>
+           </div>
+        </div>
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mt-12">
+          {testimonials.map((testimonial, index) => (
+            <div
+            key = {index}
+            className="bg-white/80 backdrop-blur-sm border border-white/20 rounded-2xl p-8 shadow-xl shadow-gray-200/50"
+            >
+              <div className="flex items-center gap-1 mb-4">
+                {[...Array(Number(testimonial.ranking))].map((_, i) => (
+                  <Star key={i} className="w-5 h-5 fill-yellow-400 text-yellow-500" />
+                ))}
+              </div>
+              <p className="text-gray-600 mb-6 leading-relaxed">
+                &ldquo;{testimonial.feedback}&ldquo;
+              </p>
+              <div>
+                <div className="font-semibold text-gray-900">
+                  {testimonial.name}
+                </div>
+                <div className="text-sm text-gray-50">
+                  {testimonial.role}
+                </div>
+              </div>
+        
+            </div>
+          ))}
+        </div>
+        
+
+      </section>
+
+      {/* CTA */}
+      <section className="px-4 lg:px-8 py-20">
+        <div className="max-w-4xl mx-auto">
+          <div className="bg-gradient-to-r from-blue-500 to-purple-600 rounded-3xl p-12 lg:p-16 text-center
+           text-white shadow-2xl">
+            <h2 className="text-xl mb-8 opacity-90">
+              Ready to get started
+            </h2>
+            <p className="text-xl mb-8 opacity-90">
+              Join thousands of creators and businesses using Simmer Link to share their content and grow their audience.
+            </p>
+            <Button
+              asChild
+              size="lg"
+              className="bg-white text-purple-600 hover:bg-gray-100 text-lg px-8 py-6 h-auto font-semibold"
+            >
+              <Link href="/dashboard" className="flex items-center gap-2">
+                Create Your Simmer Link
+                <ArrowRight className="w-5 h-5" />
+              </Link>
+            </Button> 
+             
+          <div className="mt-8 flex flex-col sm:flex-row 
+               items-center justify-center gap-6 text-sm opacity-80">
+            <div className="flex items-center gap-2">
+              <CheckCircle className="w-4 h-4" />
+              Free to start
+            </div>
+            <div className="flex items-center gap-2">
+              <CheckCircle  className="w-4 h-4" />
+              No credit card required
+            </div>
+            <div className="flex items-center gap-2">
+              <CheckCircle  className="w-4 h-4" />
+              Set up in 15 seconds
+            </div>
+          </div>
+          </div>
+         </div>
+      </section>
+
+      {/* FOOTER SECTION */}
+      <footer className="bg-white/80 backdrop-blur-sm border-t border-white/20 px-4 lg:px-8 py-12">
+        <div className="max-w-7xl mx-auto">
+          <div className="grid md:grid-cols-4 gap-8">
+            <div className="space-y-4">
+              <div className="text-2xl font-bold text-gray-900">
+                Simmer Link
+              </div>
+              <p className="text-gray-600">
+                The easiest way to share all your important links in one place.
+              </p>
+            </div>
+            <div>
+              <h4 className="font-semibold text-gray-900 mb-4">Product</h4>
+              <div className="space-y-2 text-gray-600">
+                <div>Features</div>
+                <div>Pricing</div>
+                <div>Analytics</div>
+                <div>Integrations</div>
+              </div>
+            </div>
+            <div>
+              <h4 className="font-semibold text-gray-900 mb-4">Company</h4>
+              <div className="space-y-2 text-gray-600">
+                <div>About</div>
+                <div>Blog</div>
+                <div>Careers</div>
+                <div>Contact</div>
+              </div>
+            </div>
+            <div>
+              <h4 className="font-semibold text-gray-900 mb-4">Support</h4>
+              <div className="space-y-2 text-gray-600">
+                <div>Help Center</div>
+                <div>Documentation</div>
+                <div>Community</div>
+                <div>Status</div>
+              </div>
+            </div>
+          </div>
+          <div className="border-t border-gray-200 mt-12 pt-8 text-center text-gray-500">
+            <p>&copy; 2025 Any Product by <span className="text-purple-600">Simmer</span>. All rights reservation</p>
+          </div>
+        </div>
+      </footer>
     </div>
   );
 }
