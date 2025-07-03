@@ -8,6 +8,7 @@ import { Plus } from "lucide-react";
 import { SignInButton, UserButton } from "@clerk/nextjs";
 
 function Header({  isFixed = false }: { isFixed?: boolean }) {
+  
 
   return (
   <header 
@@ -35,7 +36,8 @@ function Header({  isFixed = false }: { isFixed?: boolean }) {
             <Button 
                 asChild
                 variant = "outline"
-                className="border-purple-600 text-purple-600 hover:border-purple-700 hover:bg-purple-600 hover:text-white transition-all duration-200"
+                className="border-purple-600 text-purple-600 hover:border-purple-700 hover:bg-purple-600 hover:text-white 
+                transition-all duration-200"
             >
             <Link href="/dashboard/billing">Billing</Link>
             </Button>
@@ -48,13 +50,13 @@ function Header({  isFixed = false }: { isFixed?: boolean }) {
         <SignInButton mode="modal">
             <Button
                 variant="outline"
-                className="border-purple-600 text-purple-600 hover:border-purple-700 hover:bg-purple-600 hover:text-white transition-all duration-200"
+                className="border-purple-600 text-purple-600 hover:border-purple-700 hover:bg-purple-600 hover:text-white 
+                transition-all duration-200"
             >
                 Get Started for Free
             </Button>
         </SignInButton>
      </Unauthenticated>
-
     </div>
   </header>
   )
