@@ -19,6 +19,8 @@ import { AlertCircle, CheckCircle, Copy, ExternalLink, Loader2, User } from 'luc
 import { useMutation, useQuery } from 'convex/react';
 import { api } from '@/convex/_generated/api';
 import Link from 'next/link';
+import { getBaseUrl } from '@/lib/getBaseUrl';
+import { toast } from 'sonner';
 
 
  const formSchema = z.object({  
@@ -155,7 +157,8 @@ useEffect(() => {
             href={`/u/${currentSlug}`}
             target="_blank"
             rel = "noopener noreferrer"
-            className='text-green-600 hover:text-green-700 transition-colors'
+            className='flex-1 font-mono text-gray-800 bg-white px-3 py-2 rounded-l border-l border-y
+            hover:bg-gray-50 transition-colors'
             >
             {getBaseUrl()}/u/{currentSlug}
          </Link>
@@ -184,7 +187,7 @@ useEffect(() => {
               <FormControl>
                 <div className="relative">
                   <Input
-                    placeholder="link"
+                    placeholder="enter-your-desired-username"
                     {...field}
                     className="pr-10"
                   />
