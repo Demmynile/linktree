@@ -1,3 +1,4 @@
+// import UsernameForm from '@/components/UsernameForm'
 import UsernameForm from '@/components/UsernameForm'
 import React from 'react'
 
@@ -11,7 +12,7 @@ const DashboardPage = () => {
             <div className='max-w-7xl'>
                 <div className='bg-white/50 backdrop-blur-sm border border-white/2
                 0 rounded-2xl p-8 shadow-xl shadow-gray-200/50'>
-                   {/* <UsernameForm /> */}
+                   <UsernameForm />
                 </div>
             </div>
         </div>
