@@ -38,7 +38,21 @@ function CustomizationForm() {
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault()
-    }
+      if (!user) return;
+      
+      startTransition(async() => {
+        try{
+          await updateCustomizations({
+            description : formData.description || undefined,
+            accentColor: formData.accentColor || undefined
+          });
+          toast.success("Customizations saved successfully");
+        } catch (error){
+          console.error("Failed to save customizations:" , error)
+          toast.error("failed to save Customizations")
+        }
+      });
+    };
     const handlefileUpload = async(
       event : React.ChangeEvent<HTMLInputElement>,
     ) => {
@@ -109,6 +123,13 @@ function CustomizationForm() {
         })
       }
     } , [existingCustomizations])
+
+    const handleInputChange = (field: string , value : string ) => {
+      setFormData((prev) => ({
+        ...prev,
+        [field] : value
+      }))
+    }
     
   return (
     <div className="w-full bg-white/80 backdrop-blur-sm border border-white/20
@@ -200,6 +221,67 @@ function CustomizationForm() {
           </div>
         </div>
        {/* Description */}
+       <div className="space-y-2">
+        <Label htmlFor="description">Description</Label>
+          <textarea
+           id="description"
+           placeholder="Tell visitors about yourself"
+           value={formData.description}
+           onChange={(e) => handleInputChange("description" , e.target.value)}
+           className="w-full min-h-[100px] px-3 py-2 border border-gray-300 rounded-md
+           focus:outline-none focus:ring-2 focus:ring-purple-500
+           focus:border-transparent resize-vertical"
+           maxLength={200}
+           
+          >
+            <p className="text-sm text-gray-500">
+            {formData.description.length}/200 characters
+            </p>
+          </textarea>
+       </div>
+
+       {/* Accent Color Picker */}
+       <div className="space-y-3">
+        <Label htmlFor="accentColor">
+            Accent Color
+        </Label>
+         <div className="flex items-center gap-4">
+          <div className="flex items-center gap-3">
+          <input 
+          type="color"
+          id="accentColor"
+          value = {formData.accentColor}
+          onChange={(e) => handleInputChange("accentColor" , e.target.value)}
+          className="w-12 h-12 rounded-lg border-2 border-gray-300
+          cursor-pointer"
+
+          />
+          <div>
+            <p className="text-sm font-medium text-gray-700">
+              Choose your brand color
+            </p>
+            <p className="text-xs text-gray-500">
+              {formData.accentColor}
+            </p>
+          </div>
+          </div>
+         </div>
+         <p className = "text-sm text-gray-500">
+          This color will be used as an accent in your page header
+         </p>
+       </div>
+       {/* Save Button */}
+       <div className="pt-4">
+        <Button 
+        type = "submit"
+        disabled = {isLoading || isUploading}
+        className="w-full bg-gradient-to-r from-purple-500 to-pink-500
+        hover:from-purple-600 hover:to-pink-600"
+         >
+          {isLoading ? "Saving..." : "Save Customizations" }
+        </Button>
+
+       </div>
       </form>
     </div>
   )
