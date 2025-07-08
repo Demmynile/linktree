@@ -31,7 +31,7 @@ function PublicPageContent({
       <div
       className='h-48 relative'
       style={{
-        background: `linear-gradient(135deg , ${accentColor} 0% , ${accentColor} ee 100%)`,
+        background: `${accentColor}`,
       }}
       >
           <div className='absolute inset-0 bg-black/10'></div> 
