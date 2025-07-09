@@ -2,9 +2,17 @@
 import CustomizationForm from '@/components/CustomizationForm'
 import ManageLinks from '@/components/ManageLinks'
 import UsernameForm from '@/components/UsernameForm'
+import { api } from '@/convex/_generated/api'
+import { currentUser } from '@clerk/nextjs/server'
+import { preloadQuery } from 'convex/nextjs'
 import React from 'react'
 
-const DashboardPage = () => {
+const DashboardPage = async() => {
+  const user = await currentUser();
+  
+  const preloadedLinks = await preloadQuery(api.lib.links.getLinksByUserId , {
+    userId : user!.id
+  })
   return (
     <div>
         {/* Analytics Metrics */}
