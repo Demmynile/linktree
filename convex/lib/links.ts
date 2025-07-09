@@ -1,5 +1,37 @@
-import { query } from "../_generated/server";
+import { mutation, query } from "../_generated/server";
 import { v } from "convex/values";
+
+
+
+export const getLinksByUserId = query({
+  args: {
+    userId: v.string(),
+  },
+  returns: v.array(
+    v.object({
+      _id: v.id("links"),
+      _creationTime: v.number(),
+      userId: v.string(),
+      title: v.string(),
+      url: v.string(),
+      order: v.number(),
+    }),
+  ),
+  handler: async ({ db }, args) => {
+    const results = await db
+      .query("links")
+      .withIndex("by_user_and_order", (q) => q.eq("userId", args.userId))
+      .order("asc")
+      .collect();
+
+    // Convert string `order` to number
+    return results.map((link) => ({
+      ...link,
+      order: Number(link.order),
+    }));
+  },
+});
+
 
 export const getLinksBySlug = query({
   args: {
@@ -39,3 +71,32 @@ export const getLinksBySlug = query({
     }));
   },
 });
+export const updateLinkOrder = mutation({
+  args: { linkIds: v.array(v.id("links")) },
+  returns: v.null(),
+  handler: async ({ db, auth }, { linkIds }) => {
+    const identity = await auth.getUserIdentity();
+    if (!identity) throw new Error("Not authenticated");
+
+    const links = await Promise.all(linkIds.map((linkId) => db.get(linkId)));
+
+    const validLinks = links
+      .map((link, index) => ({ link, originalIndex: index }))
+      .filter(({ link }) => link && link.userId === identity.subject)
+      .map(({ link, originalIndex }) => ({
+        link: link as NonNullable<typeof link>,
+        originalIndex,
+      }));
+
+    // Update only valid links with their new order as a string
+    await Promise.all(
+      validLinks.map(({ link, originalIndex }) =>
+        db.patch(link._id, { order: String(originalIndex) })
+      )
+    );
+
+    return null;
+  },
+});
+
+
