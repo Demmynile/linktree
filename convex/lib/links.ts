@@ -99,4 +99,64 @@ export const updateLinkOrder = mutation({
   },
 });
 
+// Upfdate link title and URL
+export const updateLink = mutation({
+  args: {
+    linkId: v.id("links"),
+    title: v.string(),
+    url: v.string(),
+  },
+  returns: v.null(),
+  handler: async ({ db, auth }, args) => {
+    const identity = await auth.getUserIdentity();
+    if (!identity) throw new Error("Not authenticated");
 
+    const link = await db.get(args.linkId);
+    if (!link || link.userId !== identity.subject) 
+      throw new Error("Unauthorized")
+
+    // Update the link with the new title and URL
+    await db.patch(args.linkId, {
+     title : args.title, 
+     url : args.url });
+
+    return null;
+  }
+
+})
+
+export const deleteLink = mutation({
+  args: {
+    linkId: v.id("links"),
+  },
+  returns: v.null(),
+  handler: async ({ db, auth }, args) => {
+    const identity = await auth.getUserIdentity();
+    if (!identity) throw new Error("Not authenticated");
+
+    const link = await db.get(args.linkId);
+    if (!link || link.userId !== identity.subject) 
+      throw new Error("Unauthorized")
+
+    // Update the link with the new title and URL
+    await db.delete(args.linkId);
+
+    return null;
+  }
+});
+
+
+export const getLinkCountByUserId = query({
+  args: {
+    userId: v.string(),
+  },
+  returns: v.number(),
+  handler: async ({ db }, args) => {
+    const links = await db
+      .query("links")
+      .withIndex("by_user_and_order", (q) => q.eq("userId", args.userId))
+      .collect(); 
+
+    return links.length;
+  }
+});
