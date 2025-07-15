@@ -7,6 +7,9 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
+import { useRouter } from "next/navigation";
+import { useMutation } from "convex/react";
+import { api } from "@/convex/_generated/api";
 
 const formSchema = z.object({
   title: z
@@ -20,15 +23,16 @@ const formSchema = z.object({
 function CreateLinkForm() {
     const [error, setError] = useState<string | null>(null);
     const [isSubmitting, startTransition] = useTransition();
-
+    const router = useRouter();
+    const createLink = useMutation(api.lib.links.createLink); 
     // handle error
-    const handleError = (error: unknown) => {
-        if (error instanceof Error) {
-            setError(error.message);
-        } else {
-            setError("An unexpected error occurred");
-        }
-    }
+    // const handleError = (error: unknown) => {
+    //     if (error instanceof Error) {
+    //         setError(error.message);
+    //     } else {
+    //         setError("An unexpected error occurred");
+    //     }
+    // }
 // define a form
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
@@ -40,10 +44,29 @@ function CreateLinkForm() {
 
 // submit handler
     const onSubmit = async (values: z.infer<typeof formSchema>) => {
+      setError(null); // Reset error state
 
+      if(!values.url.startsWith("https://") && !values.url.startsWith("http://")) {
+        values.url = `https://${values.url}`;
+      }
+
+      startTransition(async() => {
+        try {
+            await createLink({
+                title: values.title,
+                url: values.url,
+            })
+            router.push("/dashboard");
+        } catch (error) {
+            setError(error instanceof Error ? error.message : "An unexpected error occurred");
+        }
+
+        
+      });
     }
-  return <Form {...form}>
-    <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8" >
+  return(
+  <Form {...form}>
+    <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6" >
         <FormField
         control={form.control}
         name = "title"
@@ -66,7 +89,7 @@ function CreateLinkForm() {
         )} />
         <FormField
         control={form.control}
-        name = "title"
+        name = "url"
         render={({ field }) => (
            <FormItem>
             <FormLabel>URL</FormLabel>
@@ -98,7 +121,7 @@ function CreateLinkForm() {
     </form>
     
   </Form>
-  
+  )
 }
 
 export default CreateLinkForm

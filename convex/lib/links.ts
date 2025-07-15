@@ -160,3 +160,25 @@ export const getLinkCountByUserId = query({
     return links.length;
   }
 });
+
+export const createLink = mutation({    
+  args: {
+    title: v.string(),
+    url: v.string(),
+  },
+  returns: v.id("links"),
+  handler: async ({ db, auth }, args) => {
+    const identity = await auth.getUserIdentity();
+    if (!identity) throw new Error("Not authenticated");
+
+    // Create a new link with the provided title and URL
+    return await db.insert("links", {
+      userId: identity.subject,
+      title: args.title,
+      url: args.url,
+      order: Date.now().toString(), // Convert number to string
+    });
+  }
+});
+
+
