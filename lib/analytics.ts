@@ -1,0 +1,26 @@
+import {ClientTrackingData} from "@/lib/types";
+
+
+export async function trackLinkClick(event: ClientTrackingData) {
+    try {
+       const trackingData = {
+        profileUsername: event.profileUsername,
+        linkId: event.linkId,
+        linkTitle: event.linkTitle,
+        linkUrl: event.linkUrl,
+        userAgent: event.userAgent || navigator.userAgent,
+        referrer: event.referrer || document.referrer || "direct"
+       }
+       console.log("Tracking link click:", trackingData);
+       await fetch("/api/track-link-click", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(trackingData),
+       });
+       return trackingData;
+    } catch (error) {
+        console.error("Error tracking link click:", error);
+    }
+}

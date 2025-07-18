@@ -178,3 +178,7 @@ export const createLink = mutation({
       url: args.url,
       order: Date.now().toString(), // Convert number to string
     });
+  }
+});
+
+
